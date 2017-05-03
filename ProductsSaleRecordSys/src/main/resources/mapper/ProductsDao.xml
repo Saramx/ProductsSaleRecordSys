@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="cn.syy.dao.ProductsDao">
+
+	<select id="queryBySoldId" resultType="Products" parameterType="java.lang.Integer">
+		SELECT *
+		FROM products
+		WHERE soldid = #{soldId}
+	</select>
+	
+	<select id="queryByMultiProName" resultMap="productsResultMap">
+		SELECT *
+		FROM products
+		WHERE proname = #{proName}
+	</select>
+	
+	<select id="queryByMultiSoldTime" resultMap="productsResultMap">
+		SELECT *
+		FROM products
+		WHERE soldtime = #{soldTime}
+	</select>
+	
+	<select id="queryByPrice" resultType="Products" parameterType="java.lang.String">
+		SELECT *
+		FROM products
+		WHERE price = #{price}
+	</select>
+	
+	<select id="queryAll" resultMap="productsResultMap">
+	 	SELECT * FROM products
+	</select> 
+	
+	<!-- products实体类在映射表中的对应 -->
+	<resultMap type="cn.syy.entity.Products" id="productsResultMap">
+		<id column="soldid" property="soldId" jdbcType="BIGINT"/>
+		<result column="proname" property="proName" jdbcType="VARCHAR"/>
+		<result column="soldtime" property="soldTime" jdbcType="VARCHAR"/>
+		<result column="soldnum" property="soldNum" jdbcType="BIGINT"/>
+		<result column="price" property="price" jdbcType="FLOAT"/>
+		<result column="purchaser" property="purchaser" jdbcType="VARCHAR"/>
+	</resultMap>
+
+	<insert id="insertProductsAll">
+		INSERT INTO products(proid,proname,soldtime,soldnum,price,purchaser,protime,protype,remark) 
+		Values (#{proid},#{proname},#{soldtime},#{soldnum},#{price},#{purchaser},#{protime},#{protype},#{remark})
+	</insert>	
+</mapper>
